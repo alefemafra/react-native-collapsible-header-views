@@ -163,7 +163,6 @@ export const withCollapsibleHeader = <T extends ScrollViewProps>(
         interpolatedHeaderTranslation: this.interpolatedHeaderTranslation,
         showHeader: this.showHeader,
         hideHeader: this.hideHeader,
-        backgroundColor: this.state.backgroundColor,
       };
 
       const Header =
@@ -196,6 +195,7 @@ export const withCollapsibleHeader = <T extends ScrollViewProps>(
           <Animated.View
             style={[
               styles.header,
+              { backgroundColor: this.state.backgroundColor },
               [{ transform: [{ translateY: this.headerTranslation }] }],
             ]}
           >
@@ -252,9 +252,13 @@ export const withCollapsibleHeader = <T extends ScrollViewProps>(
         );
 
         if (this.clampedScrollValue === 0 && this.scrollValue > headerHeight) {
-          this.state.backgroundColor = "#fff";
+          this.setState({
+            backgroundColor: "#fff",
+          });
         } else {
-          this.state.backgroundColor = "transparent";
+          this.setState({
+            backgroundColor: "transparent",
+          });
         }
       }
 

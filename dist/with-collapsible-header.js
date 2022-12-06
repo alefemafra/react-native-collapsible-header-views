@@ -50,10 +50,14 @@ export const withCollapsibleHeader = (Component) => {
                             ? this.offsetValue + headerHeight
                             : this.offsetValue - headerHeight);
                         if (this.clampedScrollValue === 0 && this.scrollValue > headerHeight) {
-                            this.state.backgroundColor = "#fff";
+                            this.setState({
+                                backgroundColor: "#fff",
+                            });
                         }
                         else {
-                            this.state.backgroundColor = "transparent";
+                            this.setState({
+                                backgroundColor: "transparent",
+                            });
                         }
                     }
                     onMomentumScrollEnd(event);
@@ -135,7 +139,6 @@ export const withCollapsibleHeader = (Component) => {
                     interpolatedHeaderTranslation: this.interpolatedHeaderTranslation,
                     showHeader: this.showHeader,
                     hideHeader: this.hideHeader,
-                    backgroundColor: this.state.backgroundColor,
                 };
                 const Header = CollapsibleHeaderComponent;
                 const styles = style(headerHeight, statusBarHeight, headerContainerBackgroundColor, clipHeader);
@@ -143,6 +146,7 @@ export const withCollapsibleHeader = (Component) => {
           <AnimatedComponent bounces={false} overScrollMode={"never"} scrollEventThrottle={1} {...props} ref={this.wrappedComponent} contentContainerStyle={[contentContainerStyle, styles.container]} onMomentumScrollBegin={this.onMomentumScrollBegin} onMomentumScrollEnd={this.onMomentumScrollEnd} onScrollEndDrag={this.onScrollEndDrag} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.scrollAnim } } }], { useNativeDriver: true, listener: onScroll })}/>
           <Animated.View style={[
                         styles.header,
+                        { backgroundColor: this.state.backgroundColor },
                         [{ transform: [{ translateY: this.headerTranslation }] }],
                     ]}>
             {React.isValidElement(Header) ? (Header) : (<Header {...headerProps}/>)}
