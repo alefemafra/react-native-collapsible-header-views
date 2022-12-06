@@ -163,6 +163,7 @@ export const withCollapsibleHeader = <T extends ScrollViewProps>(
         interpolatedHeaderTranslation: this.interpolatedHeaderTranslation,
         showHeader: this.showHeader,
         hideHeader: this.hideHeader,
+        backgroundColor: this.state.backgroundColor,
       };
 
       const Header =
@@ -244,13 +245,6 @@ export const withCollapsibleHeader = <T extends ScrollViewProps>(
       } = this.props;
 
       if (!disableHeaderSnap) {
-        this.moveHeader(
-          this.scrollValue > headerHeight &&
-            this.clampedScrollValue > (headerHeight - statusBarHeight) / 2
-            ? this.offsetValue + headerHeight
-            : this.offsetValue - headerHeight
-        );
-
         if (this.clampedScrollValue === 0 && this.scrollValue > headerHeight) {
           this.setState({
             backgroundColor: "#fff",
@@ -260,6 +254,12 @@ export const withCollapsibleHeader = <T extends ScrollViewProps>(
             backgroundColor: "transparent",
           });
         }
+        this.moveHeader(
+          this.scrollValue > headerHeight &&
+            this.clampedScrollValue > (headerHeight - statusBarHeight) / 2
+            ? this.offsetValue + headerHeight
+            : this.offsetValue - headerHeight
+        );
       }
 
       onMomentumScrollEnd(event);

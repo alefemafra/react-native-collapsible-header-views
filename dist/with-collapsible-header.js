@@ -45,10 +45,6 @@ export const withCollapsibleHeader = (Component) => {
                 this.onMomentumScrollEnd = (event) => {
                     const { statusBarHeight, onMomentumScrollEnd = noop, headerHeight, disableHeaderSnap, } = this.props;
                     if (!disableHeaderSnap) {
-                        this.moveHeader(this.scrollValue > headerHeight &&
-                            this.clampedScrollValue > (headerHeight - statusBarHeight) / 2
-                            ? this.offsetValue + headerHeight
-                            : this.offsetValue - headerHeight);
                         if (this.clampedScrollValue === 0 && this.scrollValue > headerHeight) {
                             this.setState({
                                 backgroundColor: "#fff",
@@ -59,6 +55,10 @@ export const withCollapsibleHeader = (Component) => {
                                 backgroundColor: "transparent",
                             });
                         }
+                        this.moveHeader(this.scrollValue > headerHeight &&
+                            this.clampedScrollValue > (headerHeight - statusBarHeight) / 2
+                            ? this.offsetValue + headerHeight
+                            : this.offsetValue - headerHeight);
                     }
                     onMomentumScrollEnd(event);
                 };
@@ -139,6 +139,7 @@ export const withCollapsibleHeader = (Component) => {
                     interpolatedHeaderTranslation: this.interpolatedHeaderTranslation,
                     showHeader: this.showHeader,
                     hideHeader: this.hideHeader,
+                    backgroundColor: this.state.backgroundColor,
                 };
                 const Header = CollapsibleHeaderComponent;
                 const styles = style(headerHeight, statusBarHeight, headerContainerBackgroundColor, clipHeader);
