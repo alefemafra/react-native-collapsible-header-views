@@ -28,7 +28,6 @@ export const withCollapsibleHeader = (Component) => {
                 this.clampedScrollValue = 0;
                 this.scrollEndTimer = 0;
                 this.wrappedComponent = React.createRef();
-                this.backgroundColor = "transparent";
                 this.onScrollEndDrag = (event) => {
                     const { onScrollEndDrag = noop, disableHeaderSnap } = this.props;
                     if (!disableHeaderSnap) {
@@ -51,10 +50,10 @@ export const withCollapsibleHeader = (Component) => {
                             ? this.offsetValue + headerHeight
                             : this.offsetValue - headerHeight);
                         if (this.clampedScrollValue === 0 && this.scrollValue > headerHeight) {
-                            this.backgroundColor = "#fff";
+                            this.state.backgroundColor = "#fff";
                         }
                         else {
-                            this.backgroundColor = "transparent";
+                            this.state.backgroundColor = "transparent";
                         }
                     }
                     onMomentumScrollEnd(event);
@@ -82,6 +81,9 @@ export const withCollapsibleHeader = (Component) => {
                     this.moveHeader(this.offsetValue +
                         (this.scrollValue > headerHeight ? headerHeight : this.scrollValue), !CollapsibleHeaderView.isAnimationConfig(options) ||
                         options.animated);
+                };
+                this.state = {
+                    backgroundColor: "transparent",
                 };
                 const { headerHeight, statusBarHeight } = props;
                 this.initAnimations(headerHeight, statusBarHeight);
@@ -133,7 +135,7 @@ export const withCollapsibleHeader = (Component) => {
                     interpolatedHeaderTranslation: this.interpolatedHeaderTranslation,
                     showHeader: this.showHeader,
                     hideHeader: this.hideHeader,
-                    backgroundColor: this.backgroundColor,
+                    backgroundColor: this.state.backgroundColor,
                 };
                 const Header = CollapsibleHeaderComponent;
                 const styles = style(headerHeight, statusBarHeight, headerContainerBackgroundColor, clipHeader);

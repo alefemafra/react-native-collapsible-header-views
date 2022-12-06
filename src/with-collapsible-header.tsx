@@ -72,10 +72,12 @@ export const withCollapsibleHeader = <T extends ScrollViewProps>(
     private currentHeaderHeight?: number;
     private currentStatusBarHeight?: number;
     private wrappedComponent: React.RefObject<any> = React.createRef();
-    private backgroundColor: string = "transparent";
 
     public constructor(props: CollapsibleHeaderViewProps<T>) {
       super(props);
+      this.state = {
+        backgroundColor: "transparent",
+      };
 
       const { headerHeight, statusBarHeight } = props;
 
@@ -161,7 +163,7 @@ export const withCollapsibleHeader = <T extends ScrollViewProps>(
         interpolatedHeaderTranslation: this.interpolatedHeaderTranslation,
         showHeader: this.showHeader,
         hideHeader: this.hideHeader,
-        backgroundColor: this.backgroundColor,
+        backgroundColor: this.state.backgroundColor,
       };
 
       const Header =
@@ -250,9 +252,9 @@ export const withCollapsibleHeader = <T extends ScrollViewProps>(
         );
 
         if (this.clampedScrollValue === 0 && this.scrollValue > headerHeight) {
-          this.backgroundColor = "#fff";
+          this.state.backgroundColor = "#fff";
         } else {
-          this.backgroundColor = "transparent";
+          this.state.backgroundColor = "transparent";
         }
       }
 
