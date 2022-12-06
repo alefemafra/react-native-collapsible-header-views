@@ -28,6 +28,18 @@ export const withCollapsibleHeader = (Component) => {
                 this.clampedScrollValue = 0;
                 this.scrollEndTimer = 0;
                 this.wrappedComponent = React.createRef();
+                this.onScrollBeginDrag = (event) => {
+                    if (this.scrollValue > 150) {
+                        this.setState({
+                            backgroundColor: "#fff",
+                        });
+                    }
+                    else {
+                        this.setState({
+                            backgroundColor: "transparent",
+                        });
+                    }
+                };
                 this.onScrollEndDrag = (event) => {
                     const { onScrollEndDrag = noop, disableHeaderSnap } = this.props;
                     if (!disableHeaderSnap) {
@@ -144,7 +156,7 @@ export const withCollapsibleHeader = (Component) => {
                 const Header = CollapsibleHeaderComponent;
                 const styles = style(headerHeight, statusBarHeight, headerContainerBackgroundColor, clipHeader);
                 return (<View style={styles.fill}>
-          <AnimatedComponent bounces={false} overScrollMode={"never"} scrollEventThrottle={1} {...props} ref={this.wrappedComponent} contentContainerStyle={[contentContainerStyle, styles.container]} onMomentumScrollBegin={this.onMomentumScrollBegin} onMomentumScrollEnd={this.onMomentumScrollEnd} onScrollEndDrag={this.onScrollEndDrag} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.scrollAnim } } }], { useNativeDriver: true, listener: onScroll })}/>
+          <AnimatedComponent bounces={false} overScrollMode={"never"} scrollEventThrottle={1} {...props} ref={this.wrappedComponent} contentContainerStyle={[contentContainerStyle, styles.container]} onMomentumScrollBegin={this.onMomentumScrollBegin} onMomentumScrollEnd={this.onMomentumScrollEnd} onScrollEndDrag={this.onScrollEndDrag} onScrollBeginDrag={this.onScrollBeginDrag} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.scrollAnim } } }], { useNativeDriver: true, listener: onScroll })}/>
           <Animated.View style={[
                         styles.header,
                         { backgroundColor: this.state.backgroundColor },

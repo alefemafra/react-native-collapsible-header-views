@@ -188,6 +188,7 @@ export const withCollapsibleHeader = <T extends ScrollViewProps>(
             onMomentumScrollBegin={this.onMomentumScrollBegin}
             onMomentumScrollEnd={this.onMomentumScrollEnd}
             onScrollEndDrag={this.onScrollEndDrag}
+            onScrollBeginDrag={this.onScrollBeginDrag}
             onScroll={Animated.event(
               [{ nativeEvent: { contentOffset: { y: this.scrollAnim } } }],
               { useNativeDriver: true, listener: onScroll }
@@ -209,6 +210,20 @@ export const withCollapsibleHeader = <T extends ScrollViewProps>(
         </View>
       );
     }
+
+    private onScrollBeginDrag = (
+      event: NativeSyntheticEvent<NativeScrollEvent>
+    ) => {
+      if (this.scrollValue > 150) {
+        this.setState({
+          backgroundColor: "#fff",
+        });
+      } else {
+        this.setState({
+          backgroundColor: "transparent",
+        });
+      }
+    };
 
     private onScrollEndDrag = (
       event: NativeSyntheticEvent<NativeScrollEvent>
