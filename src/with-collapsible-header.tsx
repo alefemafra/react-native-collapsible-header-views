@@ -23,7 +23,7 @@ export type CollapsibleHeaderProps = {
   ) => Animated.AnimatedInterpolation;
   showHeader: (options: AnimationConfig | unknown) => void;
   hideHeader: (options: AnimationConfig | unknown) => void;
-  background: string;
+  backgroundColor: string;
 };
 
 export type CollapsibleHeaderViewProps<T extends ScrollViewProps> = T & {
